@@ -1,5 +1,5 @@
 import heroMathImage from '../assets/images/hero_math_architecture_1795403883790.jpg';
-import reflectionStudyImage from '../assets/images/editorial_study_desk_clean_1795403106247.jpg';
+import reflectionStudyImage from '../assets/images/editorial_male_student_desk_1795414810585.jpg';
 
 export interface TeamMember {
   name: string;
@@ -40,6 +40,7 @@ export const PORTFOLIO_META = {
   year: '2026',
   heroImage: heroMathImage,
   reflectionImage: reflectionStudyImage,
+  facultyLogo: './assets/aistudio/image_b937669a.png',
 };
 
 export const TEAM_MEMBERS: TeamMember[] = [
@@ -132,7 +133,7 @@ export const STAGE_3_PROPOSALS = [
     name: 'Propuesta C · Regla de calificación máxima (M, máx)',
     summary: 'Monoide conmutativo e idempotente sobre M = {1, …, 10} con neutro e = 1.',
     verdict:
-      'Seleccionada por unanimidad: la ausencia de elemento inverso demuestra por qué las plataformas educativas jamás pueden ser grupos y exigen auditoría transaccional.',
+      'Seleccionada por unanimidad: esta operación específica de calificación máxima no forma un grupo por carecer de inversos para a ≥ 2, y por eso en este flujo de notas se requiere auditoría transaccional (mientras que otras operaciones dentro de una plataforma sí pueden ser grupos).',
     selected: true,
   },
 ];

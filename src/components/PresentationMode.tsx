@@ -5,9 +5,11 @@ import {
   CheckCircle2,
   Clock,
   FileText,
+  Moon,
   Pause,
   Play,
   RotateCcw,
+  Sun,
   X,
 } from 'lucide-react';
 import {
@@ -32,6 +34,8 @@ import Stage4ModularValidator from './Stage4ModularValidator';
 
 interface PresentationModeProps {
   initialSlide?: number;
+  darkMode?: boolean;
+  onToggleDarkMode?: () => void;
   onExit: () => void;
 }
 
@@ -53,7 +57,12 @@ function formatTimer(seconds: number): string {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
-export default function PresentationMode({ initialSlide = 0, onExit }: PresentationModeProps) {
+export default function PresentationMode({
+  initialSlide = 0,
+  darkMode = false,
+  onToggleDarkMode,
+  onExit,
+}: PresentationModeProps) {
   const [slideIndex, setSlideIndex] = useState<number>(initialSlide);
   const [showNotes, setShowNotes] = useState<boolean>(false);
   const [timerRunning, setTimerRunning] = useState<boolean>(true);
@@ -93,35 +102,35 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col bg-[#F8FAFC] text-[#0F172A] overflow-hidden"
+      className="fixed inset-0 z-50 flex flex-col bg-[#F4F7FB] dark:bg-[#090E1A] text-[#0F172A] dark:text-slate-100 overflow-hidden transition-colors"
       role="dialog"
       aria-modal="true"
       aria-label="Modo Exposición de Portafolio"
     >
       {/* Top Presentation Bar */}
-      <header className="border-b border-slate-200 bg-white px-6 py-3 flex items-center justify-between gap-4 shrink-0">
+      <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B1120] px-6 py-3 flex items-center justify-between gap-4 shrink-0 transition-colors">
         <div className="flex items-center gap-3 min-w-0">
-          <span className="font-bold text-sm tracking-tight text-[#0F172A] whitespace-nowrap shrink-0">
+          <span className="font-bold text-sm tracking-tight text-[#0F172A] dark:text-white whitespace-nowrap shrink-0">
             Modo Exposición
           </span>
-          <span className="text-slate-300" aria-hidden="true">·</span>
-          <span className="text-xs font-mono text-slate-600 truncate">
+          <span className="text-slate-300 dark:text-slate-700" aria-hidden="true">·</span>
+          <span className="text-xs font-mono text-slate-600 dark:text-slate-400 truncate">
             {SLIDE_TITLES[slideIndex]}
           </span>
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
           {/* Stopwatch for oral defense pacing */}
-          <div className="hidden sm:flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1">
-            <Clock className="h-3.5 w-3.5 text-slate-500" aria-hidden="true" />
-            <span className="font-mono text-xs font-semibold text-[#0F172A] tabular-nums">
+          <div className="hidden sm:flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#111827] px-2.5 py-1">
+            <Clock className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400" aria-hidden="true" />
+            <span className="font-mono text-xs font-semibold text-[#0F172A] dark:text-white tabular-nums">
               {formatTimer(elapsedSeconds)}
             </span>
             <button
               type="button"
               onClick={() => setTimerRunning((p) => !p)}
               title={timerRunning ? 'Pausar cronómetro' : 'Reanudar cronómetro'}
-              className="p-0.5 text-slate-600 hover:text-[#0F766E] cursor-pointer"
+              className="p-0.5 text-slate-600 dark:text-slate-300 hover:text-[#1D4ED8] dark:hover:text-sky-400 cursor-pointer"
             >
               {timerRunning ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
             </button>
@@ -129,33 +138,55 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
               type="button"
               onClick={() => setElapsedSeconds(0)}
               title="Reiniciar cronómetro"
-              className="p-0.5 text-slate-600 hover:text-[#0F766E] cursor-pointer"
+              className="p-0.5 text-slate-600 dark:text-slate-300 hover:text-[#1D4ED8] dark:hover:text-sky-400 cursor-pointer"
             >
               <RotateCcw className="h-3 w-3" />
             </button>
           </div>
 
+          {onToggleDarkMode && (
+            <button
+              type="button"
+              onClick={onToggleDarkMode}
+              aria-pressed={darkMode}
+              title={darkMode ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1E293B] px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer whitespace-nowrap"
+            >
+              {darkMode ? (
+                <>
+                  <Sun className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" />
+                  <span className="hidden sm:inline">Claro</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="h-3.5 w-3.5 text-[#1D4ED8]" aria-hidden="true" />
+                  <span className="hidden sm:inline">Oscuro</span>
+                </>
+              )}
+            </button>
+          )}
+
           <button
             type="button"
             onClick={() => setShowNotes((p) => !p)}
-            className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap ${
+            className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
               showNotes
-                ? 'border-[#0F766E] bg-[#0F766E] text-white'
-                : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+                ? 'border-[#1D4ED8] bg-gradient-to-r from-[#1E3A8A] via-[#1D4ED8] to-[#0284C7] text-white'
+                : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1E293B] text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
             }`}
           >
             <FileText className="h-3.5 w-3.5" aria-hidden="true" />
             Guion Oral
           </button>
 
-          <span className="hidden md:inline font-mono text-xs text-slate-500 tabular-nums">
+          <span className="hidden md:inline font-mono text-xs text-slate-500 dark:text-slate-400 tabular-nums">
             {slideIndex + 1} / {totalSlides}
           </span>
 
           <button
             type="button"
             onClick={onExit}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1E293B] px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer whitespace-nowrap"
           >
             <X className="h-3.5 w-3.5" aria-hidden="true" />
             Salir
@@ -164,19 +195,19 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
       </header>
 
       {/* Thin Progress Track */}
-      <div className="h-1 w-full bg-slate-200 shrink-0">
+      <div className="h-1 w-full bg-slate-200 dark:bg-slate-800 shrink-0">
         <div
-          className="h-full bg-[#0F766E] transition-transform duration-200 origin-left"
+          className="h-full bg-gradient-to-r from-[#1E3A8A] via-[#1D4ED8] to-[#0284C7] transition-transform duration-200 origin-left"
           style={{ transform: `scaleX(${progressScale})` }}
         />
       </div>
 
       {/* Optional Speaker Notes Banner */}
       {showNotes && (
-        <div className="border-b border-slate-200 bg-[#0F172A] text-slate-100 px-6 py-3 shrink-0">
+        <div className="border-b border-slate-200 dark:border-slate-800 bg-[#0F172A] dark:bg-[#050811] text-slate-100 px-6 py-3 shrink-0">
           <div className="mx-auto max-w-6xl flex items-start justify-between gap-4">
             <div className="space-y-0.5">
-              <div className="font-mono text-[10px] uppercase tracking-wider text-slate-400">
+              <div className="font-mono text-[10px] uppercase tracking-wider text-sky-400">
                 Guion de Defensa Oral · Diapositiva {slideIndex + 1}
               </div>
               <p className="text-xs sm:text-sm leading-relaxed text-slate-100">
@@ -200,48 +231,48 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
           {/* Slide 0: Cover */}
           {slideIndex === 0 && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-              <div className="lg:col-span-7 flex flex-col justify-between gap-8 rounded-2xl border border-slate-200 bg-white p-8 lg:p-10">
+              <div className="lg:col-span-7 flex flex-col justify-between gap-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 lg:p-10 transition-colors">
                 <div className="space-y-4">
-                  <div className="text-xs font-mono uppercase tracking-wider text-slate-500">
+                  <div className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     {PORTFOLIO_META.institution} · {PORTFOLIO_META.faculty} · {PORTFOLIO_META.year}
                   </div>
-                  <p className="text-sm font-semibold text-[#0F766E]">
+                  <p className="text-sm font-semibold text-[#1D4ED8] dark:text-sky-400">
                     {PORTFOLIO_META.career} · {PORTFOLIO_META.subject}
                   </p>
-                  <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-[#0F172A] leading-tight">
+                  <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-[#0F172A] dark:text-white leading-tight">
                     {PORTFOLIO_META.title}
                   </h1>
-                  <p className="text-base text-slate-600 leading-relaxed max-w-2xl">
+                  <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
                     Modelado matemático discreto aplicado a la gestión educativa, la arquitectura de plataformas virtuales y la integridad de datos académicos.
                   </p>
                 </div>
 
-                <div className="border-t border-slate-200 pt-6">
-                  <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-3">
+                <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
+                  <div className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
                     Equipo de Trabajo · {PORTFOLIO_META.team}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {TEAM_MEMBERS.map((m) => (
-                      <div key={m.dni} className="rounded-lg border border-slate-200 bg-[#F8FAFC] p-3.5">
-                        <div className="text-sm font-semibold text-[#0F172A]">{m.name}</div>
-                        <div className="mt-1 font-mono text-xs text-slate-500 tabular-nums">DNI {m.dni}</div>
+                      <div key={m.dni} className="rounded-lg border border-slate-200 dark:border-slate-800 bg-[#F4F7FB] dark:bg-[#0D1322] p-3.5">
+                        <div className="text-sm font-semibold text-[#0F172A] dark:text-white">{m.name}</div>
+                        <div className="mt-1 font-mono text-xs text-slate-500 dark:text-slate-400 tabular-nums">DNI {m.dni}</div>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
 
-              <div className="lg:col-span-5 rounded-2xl border border-slate-200 bg-white p-4 flex flex-col justify-between">
-                <div className="relative flex-1 min-h-[260px] overflow-hidden rounded-xl bg-slate-100">
+              <div className="lg:col-span-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 flex flex-col justify-between transition-colors">
+                <div className="relative flex-1 min-h-[260px] flex items-center justify-center rounded-xl bg-white p-4 border border-slate-100 dark:border-slate-700/60">
                   <img
-                    src={PORTFOLIO_META.heroImage}
-                    alt="Diagramas geométricos de grafos, árboles con raíz y grillas modulares"
+                    src={PORTFOLIO_META.facultyLogo}
+                    alt="Logo oficial de la Facultad de Ingeniería — Universidad Nacional de Jujuy"
                     referrerPolicy="no-referrer"
-                    className="h-full w-full object-cover"
+                    className="max-h-[280px] w-auto object-contain"
                   />
                 </div>
-                <p className="mt-3 text-xs text-slate-500">
-                  Fig. 0 — Síntesis visual de estructuras discretas: árboles jerárquicos, grafos conexos y reticulados modulares.
+                <p className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-3 text-center text-xs text-slate-500 dark:text-slate-400">
+                  Facultad de Ingeniería · Universidad Nacional de Jujuy (UNJu)
                 </p>
               </div>
             </div>
@@ -251,25 +282,25 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
           {slideIndex === 1 && (
             <div className="space-y-8">
               <div className="space-y-3 max-w-3xl">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#0F766E]">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
                   01 · Encuadre Pedagógico
                 </div>
-                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F172A]">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#0F172A] dark:text-white">
                   Introducción y Objetivos del Equipo
                 </h2>
-                <p className="text-base leading-relaxed text-slate-700">{INTRO_TEXT}</p>
+                <p className="text-base leading-relaxed text-slate-700 dark:text-slate-300">{INTRO_TEXT}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {OBJECTIVES.map((obj) => (
-                  <div key={obj.id} className="rounded-xl border border-slate-200 bg-white p-6 space-y-3">
-                    <div className="font-mono text-xs font-semibold text-[#0F766E] tabular-nums">
+                  <div key={obj.id} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 space-y-3 transition-colors">
+                    <div className="font-mono text-xs font-semibold text-[#1D4ED8] dark:text-sky-400 tabular-nums">
                       Objetivo {obj.id}
                     </div>
-                    <h3 className="text-lg font-bold text-[#0F172A]">
+                    <h3 className="text-lg font-bold text-[#0F172A] dark:text-white">
                       {obj.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-slate-600">{obj.description}</p>
+                    <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">{obj.description}</p>
                   </div>
                 ))}
               </div>
@@ -280,20 +311,20 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
           {slideIndex === 2 && (
             <div className="space-y-6">
               <div className="space-y-2">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#0F766E]">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
                   02 · Evidencias de Construcción · Etapa 1
                 </div>
-                <h2 className="text-3xl font-bold text-[#0F172A]">
+                <h2 className="text-3xl font-bold text-[#0F172A] dark:text-white">
                   Teoría de Grafos y Árboles
                 </h2>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {STAGE_1_POINTS.map((p) => (
-                  <div key={p.index} className="rounded-xl border border-slate-200 bg-white p-4 space-y-1.5">
-                    <div className="font-mono text-xs font-semibold text-[#0F766E] tabular-nums">{p.index}</div>
-                    <h3 className="text-sm font-bold text-[#0F172A]">{p.title}</h3>
-                    <p className="text-xs leading-relaxed text-slate-600">{p.detail}</p>
+                  <div key={p.index} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-4 space-y-1.5 transition-colors">
+                    <div className="font-mono text-xs font-semibold text-[#1D4ED8] dark:text-sky-400 tabular-nums">{p.index}</div>
+                    <h3 className="text-sm font-bold text-[#0F172A] dark:text-white">{p.title}</h3>
+                    <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400">{p.detail}</p>
                   </div>
                 ))}
               </div>
@@ -306,23 +337,23 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
           {slideIndex === 3 && (
             <div className="space-y-6">
               <div className="space-y-2">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#0F766E]">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
                   03 · Evidencias de Construcción · Etapa 2
                 </div>
-                <h2 className="text-3xl font-bold text-[#0F172A]">
+                <h2 className="text-3xl font-bold text-[#0F172A] dark:text-white">
                   Relaciones de Equivalencia y Partición de Conjuntos
                 </h2>
-                <p className="text-sm text-slate-600 max-w-3xl">
+                <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl">
                   Modelado de la realidad territorial de la UNJu para asignar trayectos evaluativos diferenciados (Local, Híbrido y Remoto) mediante f(a) = f(b) y el conjunto cociente |E/R| = 3.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {STAGE_2_DISCARDED.map((item) => (
-                  <div key={item.structure} className="rounded-xl border border-slate-200 bg-white p-4 space-y-1">
-                    <div className="text-xs font-mono text-red-700 font-semibold">Alternativa descartada</div>
-                    <h3 className="text-sm font-bold text-[#0F172A]">{item.structure}</h3>
-                    <p className="text-xs leading-relaxed text-slate-600">{item.reason}</p>
+                  <div key={item.structure} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-4 space-y-1 transition-colors">
+                    <div className="text-xs font-mono text-red-700 dark:text-red-400 font-semibold">Alternativa descartada</div>
+                    <h3 className="text-sm font-bold text-[#0F172A] dark:text-white">{item.structure}</h3>
+                    <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400">{item.reason}</p>
                   </div>
                 ))}
               </div>
@@ -335,10 +366,10 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
           {slideIndex === 4 && (
             <div className="space-y-6">
               <div className="space-y-2">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#0F766E]">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
                   04 · Evidencias de Construcción · Etapa 3
                 </div>
-                <h2 className="text-3xl font-bold text-[#0F172A]">
+                <h2 className="text-3xl font-bold text-[#0F172A] dark:text-white">
                   Estructuras Algebraicas y la Regla de la Calificación Máxima
                 </h2>
               </div>
@@ -347,20 +378,20 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
                 {STAGE_3_PROPOSALS.map((prop) => (
                   <div
                     key={prop.id}
-                    className={`rounded-xl border p-4 space-y-1.5 ${
+                    className={`rounded-xl border p-4 space-y-1.5 transition-colors ${
                       prop.selected
-                        ? 'border-[#0F766E] bg-white'
-                        : 'border-slate-200 bg-slate-50/70'
+                        ? 'border-[#1D4ED8] dark:border-sky-500 bg-white dark:bg-[#111827]'
+                        : 'border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-[#0D1322]'
                     }`}
                   >
                     <div className="flex items-center justify-between text-xs font-mono">
-                      <span className={prop.selected ? 'text-[#0F766E] font-semibold' : 'text-slate-500'}>
+                      <span className={prop.selected ? 'text-[#1D4ED8] dark:text-sky-400 font-semibold' : 'text-slate-500 dark:text-slate-400'}>
                         {prop.selected ? 'Propuesta seleccionada' : 'Propuesta comparada'}
                       </span>
-                      {prop.selected && <CheckCircle2 className="h-4 w-4 text-[#0F766E]" aria-hidden="true" />}
+                      {prop.selected && <CheckCircle2 className="h-4 w-4 text-[#1D4ED8] dark:text-sky-400" aria-hidden="true" />}
                     </div>
-                    <h3 className="text-sm font-bold text-[#0F172A]">{prop.name}</h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">{prop.verdict}</p>
+                    <h3 className="text-sm font-bold text-[#0F172A] dark:text-white">{prop.name}</h3>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{prop.verdict}</p>
                   </div>
                 ))}
               </div>
@@ -373,13 +404,13 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
           {slideIndex === 5 && (
             <div className="space-y-6">
               <div className="space-y-2 max-w-3xl">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#0F766E]">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
                   05 · Evidencias de Construcción · Etapa 4
                 </div>
-                <h2 className="text-3xl font-bold text-[#0F172A]">
+                <h2 className="text-3xl font-bold text-[#0F172A] dark:text-white">
                   Códigos de Seguridad y Validación Modular en ℤ₁₁
                 </h2>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   Al ser 11 un número primo, el cuerpo ℤ₁₁ carece de divisores de cero. Esto garantiza la detección del 100% de sustituciones simples y transposiciones adyacentes en legajos y series de netbooks escolares.
                 </p>
               </div>
@@ -392,20 +423,20 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
           {slideIndex === 6 && (
             <div className="space-y-6">
               <div className="space-y-2 max-w-3xl">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#0F766E]">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
                   06 · Síntesis Institucional
                 </div>
-                <h2 className="text-3xl font-bold text-[#0F172A]">
+                <h2 className="text-3xl font-bold text-[#0F172A] dark:text-white">
                   Producto Final Consolidado
                 </h2>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                   Haz clic en cualquier fila para saltar directamente al simulador interactivo de esa etapa.
                 </p>
               </div>
 
-              <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+              <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] transition-colors">
                 <table className="w-full text-left text-sm">
-                  <thead className="border-b border-slate-200 bg-slate-50 font-mono text-xs uppercase text-slate-500">
+                  <thead className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0D1322] font-mono text-xs uppercase text-slate-500 dark:text-slate-400">
                     <tr>
                       <th className="px-5 py-3.5 font-medium">Etapa</th>
                       <th className="px-5 py-3.5 font-medium">Problema Educativo</th>
@@ -413,19 +444,19 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
                       <th className="px-5 py-3.5 font-medium">Decisión Operativa</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-200">
+                  <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                     {CONSOLIDATED_MATRIX.map((row) => (
                       <tr
                         key={row.stageNumber}
                         onClick={() => setSlideIndex(row.slideIndex)}
-                        className="hover:bg-slate-50 cursor-pointer transition-colors"
+                        className="hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors"
                       >
-                        <td className="px-5 py-4 font-mono font-semibold text-[#0F766E] whitespace-nowrap tabular-nums">
+                        <td className="px-5 py-4 font-mono font-semibold text-[#1D4ED8] dark:text-sky-400 whitespace-nowrap tabular-nums">
                           {row.stageLabel} →
                         </td>
-                        <td className="px-5 py-4 text-slate-800">{row.problem}</td>
-                        <td className="px-5 py-4 font-semibold text-[#0F172A]">{row.structure}</td>
-                        <td className="px-5 py-4 text-slate-600">{row.decision}</td>
+                        <td className="px-5 py-4 text-slate-800 dark:text-slate-200">{row.problem}</td>
+                        <td className="px-5 py-4 font-semibold text-[#0F172A] dark:text-white">{row.structure}</td>
+                        <td className="px-5 py-4 text-slate-600 dark:text-slate-400">{row.decision}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -439,40 +470,40 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-7 space-y-6">
                 <div className="space-y-2">
-                  <div className="text-xs font-mono uppercase tracking-wider text-[#0F766E]">
+                  <div className="text-xs font-mono uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
                     07 · Voz del Equipo
                   </div>
-                  <h2 className="text-3xl font-bold text-[#0F172A]">
+                  <h2 className="text-3xl font-bold text-[#0F172A] dark:text-white">
                     Reflexión Crítica: La Experiencia Real del Equipo
                   </h2>
                 </div>
 
                 {REFLECTION_SECTIONS.map((sec) => (
-                  <div key={sec.title} className="rounded-xl border border-slate-200 bg-white p-6 space-y-2">
-                    <h3 className="text-lg font-bold text-[#0F172A]">{sec.title}</h3>
-                    <p className="text-sm leading-relaxed text-slate-600">{sec.body}</p>
+                  <div key={sec.title} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 space-y-2 transition-colors">
+                    <h3 className="text-lg font-bold text-[#0F172A] dark:text-white">{sec.title}</h3>
+                    <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{sec.body}</p>
                   </div>
                 ))}
               </div>
 
               <div className="lg:col-span-5 space-y-5">
-                <div className="rounded-xl border border-slate-200 bg-white p-3">
+                <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-3 transition-colors">
                   <img
                     src={PORTFOLIO_META.reflectionImage}
-                    alt="Trabajo nocturno de estudio con cuadernos de grafos y computadora"
+                    alt="Hombre estudiante universitario trabajando de noche frente a su computadora con cuadernos de matemática discreta"
                     referrerPolicy="no-referrer"
                     className="w-full aspect-video object-cover rounded-lg"
                   />
-                  <p className="mt-2.5 px-1 text-xs text-slate-500">
-                    Fig. 1 — Jornadas nocturnas de modelado discreto compatibilizando trabajo, familia y cursado.
+                  <p className="mt-2.5 px-1 text-xs text-slate-500 dark:text-slate-400">
+                    Fig. 1 — Trabajo nocturno asincrónico: coordinando entregas entre jornadas laborales, familia y distancias geográficas en Jujuy.
                   </p>
                 </div>
 
-                <div className="rounded-xl border border-slate-200 bg-white p-6 space-y-2">
-                  <div className="text-xs font-mono uppercase tracking-wider text-slate-500">
+                <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 space-y-2 transition-colors">
+                  <div className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Mirada Retrospectiva
                   </div>
-                  <p className="text-sm leading-relaxed text-slate-700">{REFLECTION_RETROSPECTIVE}</p>
+                  <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{REFLECTION_RETROSPECTIVE}</p>
                 </div>
               </div>
             </div>
@@ -482,42 +513,42 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
           {slideIndex === 8 && (
             <div className="space-y-6">
               <div className="space-y-2">
-                <div className="text-xs font-mono uppercase tracking-wider text-[#0F766E]">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
                   08 · Cierre Formativo
                 </div>
-                <h2 className="text-3xl font-bold text-[#0F172A]">
+                <h2 className="text-3xl font-bold text-[#0F172A] dark:text-white">
                   Autoevaluación, Coevaluación y Conclusión de Cierre
                 </h2>
               </div>
 
-              <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+              <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] transition-colors">
                 <table className="w-full text-left text-xs sm:text-sm">
-                  <thead className="border-b border-slate-200 bg-slate-50 font-mono text-xs uppercase text-slate-500">
+                  <thead className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0D1322] font-mono text-xs uppercase text-slate-500 dark:text-slate-400">
                     <tr>
                       <th className="px-4 py-3 font-medium">Dimensión Evaluada</th>
                       <th className="px-4 py-3 font-medium">Nivel Alcanzado</th>
                       <th className="px-4 py-3 font-medium">Fundamentación y Evidencias</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-200">
+                  <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                     {EVALUATION_MATRIX.map((row) => (
                       <tr key={row.dimension}>
-                        <td className="px-4 py-3 font-semibold text-[#0F172A]">{row.dimension}</td>
-                        <td className="px-4 py-3 font-mono font-semibold text-[#0F766E] whitespace-nowrap">
+                        <td className="px-4 py-3 font-semibold text-[#0F172A] dark:text-white">{row.dimension}</td>
+                        <td className="px-4 py-3 font-mono font-semibold text-[#1D4ED8] dark:text-sky-400 whitespace-nowrap">
                           {row.level}
                         </td>
-                        <td className="px-4 py-3 text-slate-600">{row.rationale}</td>
+                        <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{row.rationale}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-white p-6">
-                <div className="text-xs font-mono uppercase tracking-wider text-slate-500 mb-2">
+              <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 transition-colors">
+                <div className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                   Conclusión de Cierre
                 </div>
-                <p className="text-base sm:text-lg font-medium leading-relaxed text-[#0F172A]">
+                <p className="text-base sm:text-lg font-medium leading-relaxed text-[#0F172A] dark:text-white">
                   “{CLOSING_CONCLUSION}”
                 </p>
               </div>
@@ -527,12 +558,12 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
       </main>
 
       {/* Bottom Slide Controls */}
-      <footer className="border-t border-slate-200 bg-white px-6 py-3 flex items-center justify-between gap-4 shrink-0">
+      <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B1120] px-6 py-3 flex items-center justify-between gap-4 shrink-0 transition-colors">
         <button
           type="button"
           onClick={() => setSlideIndex((prev) => Math.max(0, prev - 1))}
           disabled={slideIndex === 0}
-          className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer whitespace-nowrap"
+          className="inline-flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1E293B] px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer whitespace-nowrap"
         >
           <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
           Anterior
@@ -545,10 +576,10 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
               type="button"
               onClick={() => setSlideIndex(idx)}
               title={title}
-              className={`rounded-md px-2.5 py-1 font-mono text-xs tabular-nums transition-colors cursor-pointer whitespace-nowrap ${
+              className={`rounded-md px-2.5 py-1 font-mono text-xs tabular-nums transition-all cursor-pointer whitespace-nowrap ${
                 slideIndex === idx
-                  ? 'bg-[#0F766E] text-white font-semibold'
-                  : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900'
+                  ? 'bg-gradient-to-r from-[#1E3A8A] via-[#1D4ED8] to-[#0284C7] text-white font-semibold shadow-xs'
+                  : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               {idx + 1}
@@ -565,7 +596,7 @@ export default function PresentationMode({ initialSlide = 0, onExit }: Presentat
               onExit();
             }
           }}
-          className="inline-flex items-center gap-2 rounded-lg bg-[#0F766E] px-4 py-2 text-xs font-semibold text-white hover:bg-[#115E59] transition-colors cursor-pointer whitespace-nowrap"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#1E3A8A] via-[#1D4ED8] to-[#0284C7] px-4 py-2 text-xs font-semibold text-white hover:from-[#1E40AF] hover:via-[#2563EB] hover:to-[#0EA5E9] shadow-xs transition-all cursor-pointer whitespace-nowrap"
         >
           {slideIndex < totalSlides - 1 ? 'Siguiente' : 'Finalizar exposición'}
           <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />

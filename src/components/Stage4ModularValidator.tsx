@@ -121,7 +121,6 @@ export default function Stage4ModularValidator() {
 
       const mutated = [...code];
       if (t % 2 === 0) {
-        // Adjacent transposition of distinct digits
         const i = Math.floor(Math.random() * 5);
         if (mutated[i] === mutated[i + 1]) {
           mutated[i] = (mutated[i] + 5) % 10;
@@ -131,7 +130,6 @@ export default function Stage4ModularValidator() {
           mutated[i + 1] = tmp;
         }
       } else {
-        // Single digit substitution
         const i = Math.floor(Math.random() * 6);
         mutated[i] = (mutated[i] + 1 + Math.floor(Math.random() * 9)) % 10;
       }
@@ -145,20 +143,22 @@ export default function Stage4ModularValidator() {
   };
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 bg-slate-50 px-5 py-3">
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] overflow-hidden transition-colors">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0D1322] px-5 py-3">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="h-4 w-4 text-[#0F766E]" aria-hidden="true" />
-          <span className="text-xs font-semibold text-[#0F172A]">
+          <ShieldCheck className="h-4 w-4 text-[#1D4ED8] dark:text-sky-400" aria-hidden="true" />
+          <span className="text-xs font-semibold text-[#0F172A] dark:text-white">
             Validador Modular ℤ₁₁ · Auditoría de Carga Humana
           </span>
         </div>
-        <div className="flex items-center gap-1 rounded-lg bg-slate-200/80 p-1">
+        <div className="flex items-center gap-1 rounded-lg bg-slate-200/80 dark:bg-slate-800/80 p-1">
           <button
             type="button"
             onClick={() => switchPreset('legajo')}
             className={`rounded-md px-2.5 py-1 text-xs font-semibold cursor-pointer ${
-              presetMode === 'legajo' ? 'bg-white text-[#0F172A] shadow-xs' : 'text-slate-600'
+              presetMode === 'legajo'
+                ? 'bg-white dark:bg-[#1E293B] text-[#0F172A] dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300'
             }`}
           >
             Legajo UNJu
@@ -167,7 +167,9 @@ export default function Stage4ModularValidator() {
             type="button"
             onClick={() => switchPreset('netbook')}
             className={`rounded-md px-2.5 py-1 text-xs font-semibold cursor-pointer ${
-              presetMode === 'netbook' ? 'bg-white text-[#0F172A] shadow-xs' : 'text-slate-600'
+              presetMode === 'netbook'
+                ? 'bg-white dark:bg-[#1E293B] text-[#0F172A] dark:text-white shadow-xs'
+                : 'text-slate-600 dark:text-slate-300'
             }`}
           >
             Serie Netbook
@@ -177,10 +179,10 @@ export default function Stage4ModularValidator() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12">
         {/* Left: Input + Interactive Clickable Digits */}
-        <div className="lg:col-span-6 p-5 border-b lg:border-b-0 lg:border-r border-slate-200 space-y-4">
+        <div className="lg:col-span-6 p-5 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 space-y-4">
           <div className="flex flex-wrap items-end gap-3">
             <div className="flex-1 min-w-[180px]">
-              <label htmlFor="legajo-base" className="block text-xs font-medium text-slate-700 mb-1">
+              <label htmlFor="legajo-base" className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
                 {presetMode === 'legajo' ? 'Número de Legajo base' : 'Serie de Inventario base'} (máx. 8 dígitos)
               </label>
               <input
@@ -189,21 +191,20 @@ export default function Stage4ModularValidator() {
                 inputMode="numeric"
                 value={baseInput}
                 onChange={(e) => handleBaseChange(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm text-[#0F172A] tracking-wider tabular-nums focus:border-[#0F766E] focus:outline-none"
+                className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#1E293B] px-3 py-2 font-mono text-sm text-[#0F172A] dark:text-white tracking-wider tabular-nums focus:border-[#1D4ED8] dark:focus:border-sky-400 focus:outline-none"
               />
             </div>
 
-            <div className="rounded-lg border border-slate-200 bg-[#F8FAFC] px-4 py-2 text-center">
-              <div className="text-[10px] font-mono uppercase text-slate-500">Código con ℤ₁₁</div>
-              <div className="font-mono text-lg font-bold text-[#0F766E] tabular-nums">
+            <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-[#F8FAFC] dark:bg-[#0D1322] px-4 py-2 text-center">
+              <div className="text-[10px] font-mono uppercase text-slate-500 dark:text-slate-400">Código con ℤ₁₁</div>
+              <div className="font-mono text-lg font-bold text-[#1D4ED8] dark:text-sky-400 tabular-nums">
                 {cleanBase}-{originalZ11.checkChar}
               </div>
             </div>
           </div>
 
-          {/* Clickable digits to mutate */}
           <div className="space-y-1.5">
-            <div className="text-xs font-medium text-slate-700">
+            <div className="text-xs font-medium text-slate-700 dark:text-slate-300">
               Cadena recibida (haz clic en cualquier dígito para simular error de tipeo):
             </div>
             <div className="flex flex-wrap items-center gap-1.5">
@@ -217,8 +218,8 @@ export default function Stage4ModularValidator() {
                     title={`Clic para alterar posición ${idx + 1}`}
                     className={`h-10 w-9 rounded-lg border font-mono text-base font-bold tabular-nums transition-colors cursor-pointer ${
                       isChanged
-                        ? 'border-red-400 bg-red-50 text-red-700'
-                        : 'border-slate-300 bg-white text-[#0F172A] hover:border-[#0F766E]'
+                        ? 'border-red-400 dark:border-red-700 bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300'
+                        : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-[#1E293B] text-[#0F172A] dark:text-white hover:border-[#1D4ED8] dark:hover:border-sky-400'
                     }`}
                   >
                     {d}
@@ -226,7 +227,7 @@ export default function Stage4ModularValidator() {
                 );
               })}
               <span className="font-mono text-slate-400 px-0.5">-</span>
-              <div className="h-10 px-3 rounded-lg border border-[#0F766E]/40 bg-[#0F766E]/5 flex items-center justify-center font-mono text-base font-bold text-[#0F766E]">
+              <div className="h-10 px-3 rounded-lg border border-[#1D4ED8]/40 dark:border-sky-500/40 bg-[#1D4ED8]/5 dark:bg-sky-950/50 flex items-center justify-center font-mono text-base font-bold text-[#1D4ED8] dark:text-sky-400">
                 {originalZ11.checkChar}
               </div>
             </div>
@@ -236,21 +237,21 @@ export default function Stage4ModularValidator() {
             <button
               type="button"
               onClick={simulateSubstitution}
-              className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 cursor-pointer whitespace-nowrap"
+              className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1E293B] px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer whitespace-nowrap"
             >
               Sustitución (1 dígito)
             </button>
             <button
               type="button"
               onClick={simulateTransposition}
-              className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 cursor-pointer whitespace-nowrap"
+              className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1E293B] px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer whitespace-nowrap"
             >
               Transposición adyacente
             </button>
             <button
               type="button"
               onClick={simulateZ10FailureDemo}
-              className="rounded-lg border border-[#0F766E]/30 bg-[#0F766E]/5 px-3 py-1.5 text-xs font-semibold text-[#0F766E] hover:bg-[#0F766E]/10 cursor-pointer whitespace-nowrap"
+              className="rounded-lg border border-[#1D4ED8]/30 dark:border-sky-500/40 bg-[#1D4ED8]/5 dark:bg-sky-950/50 px-3 py-1.5 text-xs font-semibold text-[#1D4ED8] dark:text-sky-400 hover:bg-[#1D4ED8]/10 dark:hover:bg-sky-900/50 cursor-pointer whitespace-nowrap"
             >
               Fallo en ℤ₁₀ (dif. 5)
             </button>
@@ -260,7 +261,7 @@ export default function Stage4ModularValidator() {
                 setTransmittedInput(cleanBase);
                 setFaultDescription('Cadena restaurada al valor original.');
               }}
-              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600 hover:text-slate-900 cursor-pointer"
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1E293B] px-2.5 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white cursor-pointer"
             >
               <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
               Restaurar
@@ -269,20 +270,20 @@ export default function Stage4ModularValidator() {
         </div>
 
         {/* Right: Verification Result + 1,000-Trial Benchmark */}
-        <div className="lg:col-span-6 p-5 bg-[#F8FAFC] flex flex-col justify-between gap-4">
+        <div className="lg:col-span-6 p-5 bg-[#F8FAFC] dark:bg-[#0D1322] flex flex-col justify-between gap-4">
           <div className="space-y-3">
-            <p className="text-xs text-slate-600">{faultDescription}</p>
+            <p className="text-xs text-slate-600 dark:text-slate-300">{faultDescription}</p>
 
             {isValidZ11 ? (
-              <div className="flex items-start gap-2.5 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-950">
-                <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-700 mt-0.5" aria-hidden="true" />
+              <div className="flex items-start gap-2.5 rounded-lg border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50 dark:bg-emerald-950/50 p-3 text-xs text-emerald-950 dark:text-emerald-200">
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400 mt-0.5" aria-hidden="true" />
                 <div>
                   <strong>VÁLIDO EN ℤ₁₁:</strong> Suma = {transmittedCheck.sum} ≡ {transmittedCheck.remainder} (mód 11) → Verificador {transmittedCheck.checkChar}.
                 </div>
               </div>
             ) : (
-              <div className="flex items-start gap-2.5 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-950">
-                <AlertTriangle className="h-4 w-4 shrink-0 text-red-700 mt-0.5" aria-hidden="true" />
+              <div className="flex items-start gap-2.5 rounded-lg border border-red-200 dark:border-red-900/60 bg-red-50 dark:bg-red-950/50 p-3 text-xs text-red-950 dark:text-red-200">
+                <AlertTriangle className="h-4 w-4 shrink-0 text-red-700 dark:text-red-400 mt-0.5" aria-hidden="true" />
                 <div>
                   <strong>ERROR RECHAZADO POR ℤ₁₁:</strong> Se esperaba verificador <strong>{transmittedCheck.checkChar}</strong> para {cleanTransmitted}, pero el adjunto es <strong>{originalZ11.checkChar}</strong>.
                 </div>
@@ -290,8 +291,8 @@ export default function Stage4ModularValidator() {
             )}
 
             {z10Colision && (
-              <div className="flex items-start gap-2.5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-950">
-                <AlertTriangle className="h-4 w-4 shrink-0 text-amber-700 mt-0.5" aria-hidden="true" />
+              <div className="flex items-start gap-2.5 rounded-lg border border-amber-200 dark:border-amber-900/60 bg-amber-50 dark:bg-amber-950/50 p-3 text-xs text-amber-950 dark:text-amber-200">
+                <AlertTriangle className="h-4 w-4 shrink-0 text-amber-700 dark:text-amber-400 mt-0.5" aria-hidden="true" />
                 <div>
                   <strong>COLISIÓN EN ℤ₁₀:</strong> Un esquema en ℤ₁₀ arroja idéntico dígito ({z10Orig}) y deja pasar el error porque 10 tiene divisores de cero.
                 </div>
@@ -299,17 +300,16 @@ export default function Stage4ModularValidator() {
             )}
           </div>
 
-          {/* 1,000-Error Monte Carlo Stress Test */}
-          <div className="rounded-lg border border-slate-200 bg-white p-3.5 space-y-2.5">
+          <div className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-3.5 space-y-2.5">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0F172A]">
-                <BarChart3 className="h-3.5 w-3.5 text-[#0F766E]" aria-hidden="true" />
+              <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0F172A] dark:text-white">
+                <BarChart3 className="h-3.5 w-3.5 text-[#1D4ED8] dark:text-sky-400" aria-hidden="true" />
                 <span>Prueba comparativa (500 sustituciones + 500 transposiciones)</span>
               </div>
               <button
                 type="button"
                 onClick={runStressBenchmark}
-                className="rounded-md bg-[#0F766E] px-3 py-1 text-xs font-semibold text-white hover:bg-[#115E59] cursor-pointer whitespace-nowrap"
+                className="rounded-md bg-gradient-to-r from-[#1E3A8A] via-[#1D4ED8] to-[#0284C7] px-3 py-1 text-xs font-semibold text-white hover:from-[#172554] hover:via-[#1E40AF] hover:to-[#0369A1] cursor-pointer whitespace-nowrap"
               >
                 Ejecutar 1.000 errores
               </button>
@@ -317,27 +317,27 @@ export default function Stage4ModularValidator() {
 
             {benchmark ? (
               <div className="grid grid-cols-3 gap-2 pt-1 font-mono text-xs tabular-nums">
-                <div className="rounded border border-slate-200 bg-slate-50 p-2">
-                  <div className="text-[10px] text-slate-500">Paridad (5,4)</div>
-                  <div className="font-bold text-red-700">
+                <div className="rounded border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0D1322] p-2">
+                  <div className="text-[10px] text-slate-500 dark:text-slate-400">Paridad (5,4)</div>
+                  <div className="font-bold text-red-700 dark:text-red-400">
                     {((benchmark.parityCaught / benchmark.trials) * 100).toFixed(1)}%
                   </div>
                 </div>
-                <div className="rounded border border-slate-200 bg-slate-50 p-2">
-                  <div className="text-[10px] text-slate-500">Módulo ℤ₁₀</div>
-                  <div className="font-bold text-amber-700">
+                <div className="rounded border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0D1322] p-2">
+                  <div className="text-[10px] text-slate-500 dark:text-slate-400">Módulo ℤ₁₀</div>
+                  <div className="font-bold text-amber-700 dark:text-amber-400">
                     {((benchmark.z10Caught / benchmark.trials) * 100).toFixed(1)}%
                   </div>
                 </div>
-                <div className="rounded border border-emerald-200 bg-emerald-50 p-2">
-                  <div className="text-[10px] text-emerald-700">Cuerpo ℤ₁₁</div>
-                  <div className="font-bold text-emerald-800">
+                <div className="rounded border border-emerald-200 dark:border-emerald-800/70 bg-emerald-50 dark:bg-emerald-950/50 p-2">
+                  <div className="text-[10px] text-emerald-700 dark:text-emerald-400">Cuerpo ℤ₁₁</div>
+                  <div className="font-bold text-emerald-800 dark:text-emerald-300">
                     {((benchmark.z11Caught / benchmark.trials) * 100).toFixed(1)}%
                   </div>
                 </div>
               </div>
             ) : (
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 Haz clic en “Ejecutar 1.000 errores” para demostrar estadísticamente en tu exposición la superioridad de ℤ₁₁ frente a paridad (5,4) y ℤ₁₀.
               </p>
             )}
