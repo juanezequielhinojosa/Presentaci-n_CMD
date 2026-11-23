@@ -1,3 +1,6 @@
+import heroMathImage from '../assets/images/hero_math_architecture_1795403883790.jpg';
+import reflectionStudyImage from '../assets/images/editorial_study_desk_clean_1795403106247.jpg';
+
 export interface TeamMember {
   name: string;
   dni: string;
@@ -35,8 +38,8 @@ export const PORTFOLIO_META = {
   career: 'Licenciatura en Informática Educativa',
   team: 'Grupo 36',
   year: '2026',
-  heroImage: '/src/assets/images/hero_math_architecture_1795403883790.jpg',
-  reflectionImage: '/src/assets/images/editorial_study_desk_clean_1795403106247.jpg',
+  heroImage: heroMathImage,
+  reflectionImage: reflectionStudyImage,
 };
 
 export const TEAM_MEMBERS: TeamMember[] = [
