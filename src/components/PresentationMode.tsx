@@ -230,8 +230,38 @@ export default function PresentationMode({
         <div className="mx-auto max-w-6xl">
           {/* Slide 0: Cover */}
           {slideIndex === 0 && (
-            <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-lg shadow-slate-900/5 dark:shadow-black/40 overflow-hidden transition-colors">
-              <div className="lg:col-span-7 relative z-10 flex flex-col justify-between gap-8 p-8 lg:p-10">
+            <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-lg shadow-slate-900/5 dark:shadow-black/40 overflow-hidden transition-colors">
+              <div className="pointer-events-none absolute inset-0 lg:left-[28%] overflow-hidden">
+                <img
+                  src={PORTFOLIO_META.heroImage}
+                  alt="Estructura tridimensional de álgebra discreta y grafos en azul cobalto"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-full object-cover object-center lg:object-right"
+                />
+              </div>
+
+              <div aria-hidden="true" className="hero-contour-shade pointer-events-none absolute inset-0 z-10" />
+
+              <div className="relative z-30 mx-8 mt-6 lg:mx-0 lg:mt-0 lg:absolute lg:top-5 lg:right-5 inline-flex items-center gap-2.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/92 dark:bg-[#0B1120]/92 backdrop-blur-md px-3 py-2 shadow-lg">
+                <div className="h-9 w-9 shrink-0 rounded-lg bg-white p-1 border border-slate-200/80 flex items-center justify-center">
+                  <img
+                    src={PORTFOLIO_META.facultyLogo}
+                    alt="Escudo Facultad de Ingeniería — UNJu"
+                    referrerPolicy="no-referrer"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+                <div className="leading-tight pr-1">
+                  <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
+                    UNJu · FI
+                  </div>
+                  <div className="text-xs font-semibold text-[#0F172A] dark:text-white whitespace-nowrap">
+                    Facultad de Ingeniería
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative z-20 flex flex-col justify-between gap-8 p-8 pt-5 lg:p-10 lg:max-w-[66%]">
                 <div className="space-y-4">
                   <div className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     {PORTFOLIO_META.institution} · {PORTFOLIO_META.faculty} · {PORTFOLIO_META.year}
@@ -242,18 +272,21 @@ export default function PresentationMode({
                   <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-[#0F172A] dark:text-white leading-tight">
                     {PORTFOLIO_META.title}
                   </h1>
-                  <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+                  <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
                     Modelado matemático discreto aplicado a la gestión educativa, la arquitectura de plataformas virtuales y la integridad de datos académicos.
                   </p>
                 </div>
 
-                <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
+                <div className="pt-2">
                   <div className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
                     Equipo de Trabajo · {PORTFOLIO_META.team}
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {TEAM_MEMBERS.map((m) => (
-                      <div key={m.dni} className="rounded-lg border border-slate-200 dark:border-slate-800 bg-[#F4F7FB] dark:bg-[#0D1322] p-3.5">
+                      <div
+                        key={m.dni}
+                        className="rounded-xl border border-slate-200/80 dark:border-slate-700/70 bg-white/85 dark:bg-[#0D1322]/85 backdrop-blur-sm p-3.5 shadow-xs"
+                      >
                         <div className="text-sm font-semibold text-[#0F172A] dark:text-white">{m.name}</div>
                         <div className="mt-1 font-mono text-xs text-slate-500 dark:text-slate-400 tabular-nums">DNI {m.dni}</div>
                       </div>
@@ -262,47 +295,9 @@ export default function PresentationMode({
                 </div>
               </div>
 
-              <div className="lg:col-span-5 relative min-h-[320px] lg:min-h-full overflow-hidden bg-slate-900">
-                <img
-                  src={PORTFOLIO_META.heroImage}
-                  alt="Estructura tridimensional de álgebra discreta y grafos en azul cobalto"
-                  referrerPolicy="no-referrer"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none hidden lg:block absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-[#111827] dark:via-[#111827]/85 dark:to-transparent z-10"
-                />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none lg:hidden absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#111827] dark:via-[#111827]/85 dark:to-transparent z-10"
-                />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/75 via-slate-950/30 to-transparent z-10"
-                />
-                <div className="absolute top-4 right-4 z-20 inline-flex items-center gap-2.5 rounded-xl border border-white/80 dark:border-slate-700/80 bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-md px-3 py-2 shadow-lg">
-                  <div className="h-9 w-9 shrink-0 rounded-lg bg-white p-1 border border-slate-200/80 flex items-center justify-center">
-                    <img
-                      src={PORTFOLIO_META.facultyLogo}
-                      alt="Escudo Facultad de Ingeniería — UNJu"
-                      referrerPolicy="no-referrer"
-                      className="h-full w-full object-contain"
-                    />
-                  </div>
-                  <div className="leading-tight pr-1">
-                    <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
-                      UNJu · FI
-                    </div>
-                    <div className="text-xs font-semibold text-[#0F172A] dark:text-white whitespace-nowrap">
-                      Facultad de Ingeniería
-                    </div>
-                  </div>
-                </div>
-                <p className="absolute bottom-4 right-5 left-5 lg:left-16 z-20 text-right text-xs font-medium text-white/90 drop-shadow-xs">
-                  Álgebra discreta · Retículos, grafos y estructuras modulares
-                </p>
-              </div>
+              <p className="relative z-20 px-8 pb-5 lg:p-0 lg:absolute lg:bottom-4 lg:right-5 text-right text-xs font-medium text-slate-600 lg:text-white/95 lg:drop-shadow-xs">
+                Álgebra discreta · Retículos, grafos y estructuras modulares
+              </p>
             </div>
           )}
 

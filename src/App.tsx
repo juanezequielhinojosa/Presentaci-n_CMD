@@ -179,9 +179,47 @@ export default function App() {
       <main className="mx-auto max-w-6xl px-6 py-10 lg:py-14 space-y-20">
         {/* Hero / Institutional Cover */}
         <section id="portada" className="space-y-8">
-          <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-lg shadow-slate-900/5 dark:shadow-black/40 overflow-hidden transition-colors">
-            {/* Left Cover Column */}
-            <div className="lg:col-span-7 relative z-10 flex flex-col justify-between gap-8 p-8 lg:p-10">
+          <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-lg shadow-slate-900/5 dark:shadow-black/40 overflow-hidden transition-colors">
+            {/* Full-height discrete algebra artwork anchored right, with no hard vertical cut */}
+            <div className="pointer-events-none absolute inset-0 lg:left-[28%] overflow-hidden">
+              {!heroImgFailed ? (
+                <img
+                  src={PORTFOLIO_META.heroImage}
+                  alt="Estructura tridimensional de álgebra discreta y grafos en azul cobalto"
+                  referrerPolicy="no-referrer"
+                  onError={() => setHeroImgFailed(true)}
+                  className="h-full w-full object-cover object-center lg:object-right"
+                />
+              ) : (
+                <div className="h-full w-full bg-gradient-to-br from-[#1E3A8A]/20 via-[#1D4ED8]/25 to-[#0284C7]/30" />
+              )}
+            </div>
+
+            {/* Organic contoured shading wrapping around words and member cards */}
+            <div aria-hidden="true" className="hero-contour-shade pointer-events-none absolute inset-0 z-10" />
+
+            {/* Institutional Tag with small UNJu logo */}
+            <div className="relative z-30 mx-8 mt-6 lg:mx-0 lg:mt-0 lg:absolute lg:top-5 lg:right-5 inline-flex items-center gap-2.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/92 dark:bg-[#0B1120]/92 backdrop-blur-md px-3 py-2 shadow-lg">
+              <div className="h-9 w-9 shrink-0 rounded-lg bg-white p-1 border border-slate-200/80 flex items-center justify-center">
+                <img
+                  src={PORTFOLIO_META.facultyLogo}
+                  alt="Escudo Facultad de Ingeniería — UNJu"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <div className="leading-tight pr-1">
+                <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
+                  UNJu · FI
+                </div>
+                <div className="text-xs font-semibold text-[#0F172A] dark:text-white whitespace-nowrap">
+                  Facultad de Ingeniería
+                </div>
+              </div>
+            </div>
+
+            {/* Foreground Content flowing organically over the contoured mist */}
+            <div className="relative z-20 flex flex-col justify-between gap-8 p-8 pt-5 lg:p-10 lg:max-w-[66%]">
               <div className="space-y-5">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-mono text-slate-500 dark:text-slate-400">
                   <span>{PORTFOLIO_META.institution}</span>
@@ -200,7 +238,7 @@ export default function App() {
                   </h1>
                 </div>
 
-                <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 max-w-2xl">
+                <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 max-w-xl">
                   Plataforma interactiva de exposición académica del <strong className="text-[#0F172A] dark:text-white">{PORTFOLIO_META.team}</strong>: cuatro modelos formales de matemática discreta con simuladores en vivo aplicados a la gestión educativa y plataformas digitales.
                 </p>
 
@@ -216,7 +254,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => window.print()}
-                    className="inline-flex items-center gap-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#1E293B] px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer whitespace-nowrap"
+                    className="inline-flex items-center gap-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-[#1E293B]/90 backdrop-blur-xs px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer whitespace-nowrap"
                   >
                     <Printer className="h-4 w-4" aria-hidden="true" />
                     Imprimir / PDF
@@ -225,7 +263,7 @@ export default function App() {
                     type="button"
                     onClick={() => setDarkMode((prev) => !prev)}
                     aria-pressed={darkMode}
-                    className="inline-flex items-center gap-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#1E293B] px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer whitespace-nowrap"
+                    className="inline-flex items-center gap-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-[#1E293B]/90 backdrop-blur-xs px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer whitespace-nowrap"
                   >
                     {darkMode ? (
                       <>
@@ -242,14 +280,17 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Team Roster Footer inside Cover */}
-              <div className="border-t border-slate-200 dark:border-slate-800 pt-6">
+              {/* Team Roster Cards blended cleanly into the contoured shading */}
+              <div className="pt-2">
                 <div className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
                   Integrantes · {PORTFOLIO_META.team}
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {TEAM_MEMBERS.map((member) => (
-                    <div key={member.dni} className="space-y-0.5">
+                    <div
+                      key={member.dni}
+                      className="rounded-xl border border-slate-200/80 dark:border-slate-700/70 bg-white/85 dark:bg-[#0D1322]/85 backdrop-blur-sm px-3.5 py-2.5 shadow-xs space-y-0.5"
+                    >
                       <div className="text-sm font-semibold text-[#0F172A] dark:text-white">{member.name}</div>
                       <div className="font-mono text-xs text-slate-500 dark:text-slate-400 tabular-nums">DNI {member.dni}</div>
                     </div>
@@ -258,65 +299,10 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right Cover Discrete Algebra Visual joined via shaded transition + UNJu Tag */}
-            <div className="lg:col-span-5 relative min-h-[320px] lg:min-h-full overflow-hidden bg-slate-900">
-              {!heroImgFailed ? (
-                <img
-                  src={PORTFOLIO_META.heroImage}
-                  alt="Estructura tridimensional de álgebra discreta y grafos en azul cobalto"
-                  referrerPolicy="no-referrer"
-                  onError={() => setHeroImgFailed(true)}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-[#1E3A8A] via-[#1D4ED8] to-[#0284C7] text-white">
-                  <BookOpen className="h-10 w-10 mb-2 opacity-90" aria-hidden="true" />
-                  <span className="text-sm font-semibold">Complementos de Matemática Discreta</span>
-                  <span className="text-xs opacity-80">Facultad de Ingeniería · UNJu</span>
-                </div>
-              )}
-
-              {/* Desktop horizontal shaded bridge */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none hidden lg:block absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-[#111827] dark:via-[#111827]/85 dark:to-transparent z-10"
-              />
-              {/* Mobile vertical shaded bridge */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none lg:hidden absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#111827] dark:via-[#111827]/85 dark:to-transparent z-10"
-              />
-              {/* Bottom gradient scrim for caption legibility */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/75 via-slate-950/30 to-transparent z-10"
-              />
-
-              {/* Institutional Tag with small UNJu logo */}
-              <div className="absolute top-4 right-4 z-20 inline-flex items-center gap-2.5 rounded-xl border border-white/80 dark:border-slate-700/80 bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-md px-3 py-2 shadow-lg">
-                <div className="h-9 w-9 shrink-0 rounded-lg bg-white p-1 border border-slate-200/80 flex items-center justify-center">
-                  <img
-                    src={PORTFOLIO_META.facultyLogo}
-                    alt="Escudo Facultad de Ingeniería — UNJu"
-                    referrerPolicy="no-referrer"
-                    className="h-full w-full object-contain"
-                  />
-                </div>
-                <div className="leading-tight pr-1">
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
-                    UNJu · FI
-                  </div>
-                  <div className="text-xs font-semibold text-[#0F172A] dark:text-white whitespace-nowrap">
-                    Facultad de Ingeniería
-                  </div>
-                </div>
-              </div>
-
-              {/* Subtle bottom visual caption */}
-              <p className="absolute bottom-4 right-5 left-5 lg:left-16 z-20 text-right text-xs font-medium text-white/90 drop-shadow-xs">
-                Álgebra discreta · Retículos, grafos y estructuras modulares
-              </p>
-            </div>
+            {/* Subtle bottom-right caption */}
+            <p className="relative z-20 px-8 pb-5 lg:p-0 lg:absolute lg:bottom-4 lg:right-5 text-right text-xs font-medium text-slate-600 lg:text-white/95 lg:drop-shadow-xs">
+              Álgebra discreta · Retículos, grafos y estructuras modulares
+            </p>
           </div>
 
           {/* 4-Stage Quick Launch Strip below Hero Split */}
