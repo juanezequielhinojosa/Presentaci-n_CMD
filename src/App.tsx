@@ -24,6 +24,7 @@ import {
   TEAM_MEMBERS,
 } from './data/portfolioData';
 import Stage1GraphsExplorer from './components/Stage1GraphsExplorer';
+import Stage1SituationsGallery from './components/Stage1SituationsGallery';
 import Stage2EquivalenceExplorer from './components/Stage2EquivalenceExplorer';
 import Stage3MonoidExplorer from './components/Stage3MonoidExplorer';
 import Stage4ModularValidator from './components/Stage4ModularValidator';
@@ -259,24 +260,6 @@ export default function App() {
                     <Printer className="h-4 w-4" aria-hidden="true" />
                     Imprimir / PDF
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => setDarkMode((prev) => !prev)}
-                    aria-pressed={darkMode}
-                    className="inline-flex items-center gap-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-[#1E293B]/90 backdrop-blur-xs px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer whitespace-nowrap"
-                  >
-                    {darkMode ? (
-                      <>
-                        <Sun className="h-4 w-4 text-amber-400" aria-hidden="true" />
-                        Tema Claro
-                      </>
-                    ) : (
-                      <>
-                        <Moon className="h-4 w-4 text-[#1D4ED8]" aria-hidden="true" />
-                        Tema Oscuro
-                      </>
-                    )}
-                  </button>
                 </div>
               </div>
 
@@ -442,6 +425,8 @@ export default function App() {
               </div>
 
               <Stage1GraphsExplorer />
+
+              <Stage1SituationsGallery />
             </article>
           )}
 

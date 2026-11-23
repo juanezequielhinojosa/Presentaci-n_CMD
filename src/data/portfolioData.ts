@@ -100,6 +100,44 @@ export const STAGE_1_POINTS = [
   },
 ];
 
+export const STAGE_1_SITUATIONS = [
+  {
+    number: 1,
+    title: 'Situación 1 · Navegación en el Aula Virtual (Grafo No Dirigido)',
+    caption:
+      'La bidireccionalidad de los enlaces y la ausencia de jerarquías se modelan de forma natural con un grafo simple.',
+    image: './assets/aistudio/situacion_1_ee6682bf.jpeg',
+  },
+  {
+    number: 2,
+    title: 'Situación 2 · Trayecto Formativo y Correlativas (Dígrafo)',
+    caption:
+      'Las dependencias secuenciales y los posibles ciclos se analizan mediante arcos dirigidos.',
+    image: './assets/aistudio/situacion_2_20aa85db.jpeg',
+  },
+  {
+    number: 3,
+    title: 'Situación 3 · Organización de Archivos en la Nube (Árbol con Raíz)',
+    caption:
+      'La jerarquía de contención y los niveles de carpetas se modelan mediante un árbol de altura 3.',
+    image: './assets/aistudio/situacion_3_793fb690.jpeg',
+  },
+  {
+    number: 4,
+    title: 'Situación 4 · Rediseño Curricular (Ensamble: DAG + Árbol)',
+    caption:
+      'Se combinan un dígrafo acíclico para correlatividades y un árbol de altura 3 para la navegación.',
+    image: './assets/aistudio/situacion_4_33ebb604.jpeg',
+  },
+  {
+    number: 5,
+    title: 'Situación 5 · Clasificación y Roles (Árboles Binario y de Permisos)',
+    caption:
+      'Se utilizan un árbol de decisión para clasificar estudiantes y un árbol de jerarquía para el acceso al aula.',
+    image: './assets/aistudio/situacion_5_3036edd7.jpeg',
+  },
+];
+
 export const STAGE_2_DISCARDED = [
   {
     structure: 'Orden parcial y Diagramas de Hasse',

@@ -28,6 +28,7 @@ import {
   TEAM_MEMBERS,
 } from '../data/portfolioData';
 import Stage1GraphsExplorer from './Stage1GraphsExplorer';
+import Stage1SituationsGallery from './Stage1SituationsGallery';
 import Stage2EquivalenceExplorer from './Stage2EquivalenceExplorer';
 import Stage3MonoidExplorer from './Stage3MonoidExplorer';
 import Stage4ModularValidator from './Stage4ModularValidator';
@@ -353,6 +354,8 @@ export default function PresentationMode({
               </div>
 
               <Stage1GraphsExplorer />
+
+              <Stage1SituationsGallery />
             </div>
           )}
 
