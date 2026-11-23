@@ -89,9 +89,14 @@ export default function App() {
           {/* Zone 1: Single-line Wordmark */}
           <a
             href="#portada"
-            className="font-bold text-base tracking-tight text-[#0F172A] dark:text-white whitespace-nowrap shrink-0"
+            className="inline-flex items-center gap-2 rounded-lg border border-[#1D4ED8]/30 dark:border-sky-500/40 bg-white dark:bg-[#111827] p-1 pr-3 shadow-xs hover:border-[#1D4ED8] dark:hover:border-sky-400 transition-colors whitespace-nowrap shrink-0"
           >
-            Grupo 36 · UNJu
+            <span className="rounded-md bg-gradient-to-r from-[#1E3A8A] via-[#1D4ED8] to-[#0284C7] px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wider text-white">
+              GRUPO 36
+            </span>
+            <span className="font-bold text-sm tracking-tight text-[#0F172A] dark:text-white">
+              UNJu
+            </span>
           </a>
 
           {/* Zone 2: 5 concise single-line navigation links */}
