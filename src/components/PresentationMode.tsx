@@ -230,8 +230,8 @@ export default function PresentationMode({
         <div className="mx-auto max-w-6xl">
           {/* Slide 0: Cover */}
           {slideIndex === 0 && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-              <div className="lg:col-span-7 flex flex-col justify-between gap-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 lg:p-10 transition-colors">
+            <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-lg shadow-slate-900/5 dark:shadow-black/40 overflow-hidden transition-colors">
+              <div className="lg:col-span-7 relative z-10 flex flex-col justify-between gap-8 p-8 lg:p-10">
                 <div className="space-y-4">
                   <div className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     {PORTFOLIO_META.institution} · {PORTFOLIO_META.faculty} · {PORTFOLIO_META.year}
@@ -262,17 +262,45 @@ export default function PresentationMode({
                 </div>
               </div>
 
-              <div className="lg:col-span-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 flex flex-col justify-between transition-colors">
-                <div className="relative flex-1 min-h-[260px] flex items-center justify-center rounded-xl bg-white p-4 border border-slate-100 dark:border-slate-700/60">
-                  <img
-                    src={PORTFOLIO_META.facultyLogo}
-                    alt="Logo oficial de la Facultad de Ingeniería — Universidad Nacional de Jujuy"
-                    referrerPolicy="no-referrer"
-                    className="max-h-[280px] w-auto object-contain"
-                  />
+              <div className="lg:col-span-5 relative min-h-[320px] lg:min-h-full overflow-hidden bg-slate-900">
+                <img
+                  src={PORTFOLIO_META.heroImage}
+                  alt="Estructura tridimensional de álgebra discreta y grafos en azul cobalto"
+                  referrerPolicy="no-referrer"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none hidden lg:block absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-[#111827] dark:via-[#111827]/85 dark:to-transparent z-10"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none lg:hidden absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#111827] dark:via-[#111827]/85 dark:to-transparent z-10"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/75 via-slate-950/30 to-transparent z-10"
+                />
+                <div className="absolute top-4 right-4 z-20 inline-flex items-center gap-2.5 rounded-xl border border-white/80 dark:border-slate-700/80 bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-md px-3 py-2 shadow-lg">
+                  <div className="h-9 w-9 shrink-0 rounded-lg bg-white p-1 border border-slate-200/80 flex items-center justify-center">
+                    <img
+                      src={PORTFOLIO_META.facultyLogo}
+                      alt="Escudo Facultad de Ingeniería — UNJu"
+                      referrerPolicy="no-referrer"
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <div className="leading-tight pr-1">
+                    <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
+                      UNJu · FI
+                    </div>
+                    <div className="text-xs font-semibold text-[#0F172A] dark:text-white whitespace-nowrap">
+                      Facultad de Ingeniería
+                    </div>
+                  </div>
                 </div>
-                <p className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-3 text-center text-xs text-slate-500 dark:text-slate-400">
-                  Facultad de Ingeniería · Universidad Nacional de Jujuy (UNJu)
+                <p className="absolute bottom-4 right-5 left-5 lg:left-16 z-20 text-right text-xs font-medium text-white/90 drop-shadow-xs">
+                  Álgebra discreta · Retículos, grafos y estructuras modulares
                 </p>
               </div>
             </div>

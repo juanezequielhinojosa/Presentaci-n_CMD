@@ -179,9 +179,9 @@ export default function App() {
       <main className="mx-auto max-w-6xl px-6 py-10 lg:py-14 space-y-20">
         {/* Hero / Institutional Cover */}
         <section id="portada" className="space-y-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          <div className="relative grid grid-cols-1 lg:grid-cols-12 items-stretch rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-lg shadow-slate-900/5 dark:shadow-black/40 overflow-hidden transition-colors">
             {/* Left Cover Column */}
-            <div className="lg:col-span-7 flex flex-col justify-between gap-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 lg:p-10 transition-colors">
+            <div className="lg:col-span-7 relative z-10 flex flex-col justify-between gap-8 p-8 lg:p-10">
               <div className="space-y-5">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-mono text-slate-500 dark:text-slate-400">
                   <span>{PORTFOLIO_META.institution}</span>
@@ -258,29 +258,63 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right Cover Institutional Logo */}
-            <div className="lg:col-span-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 flex flex-col justify-between transition-colors">
-              <div className="relative flex-1 min-h-[260px] flex items-center justify-center rounded-xl bg-white p-4 border border-slate-100 dark:border-slate-700/60">
-                {!heroImgFailed ? (
+            {/* Right Cover Discrete Algebra Visual joined via shaded transition + UNJu Tag */}
+            <div className="lg:col-span-5 relative min-h-[320px] lg:min-h-full overflow-hidden bg-slate-900">
+              {!heroImgFailed ? (
+                <img
+                  src={PORTFOLIO_META.heroImage}
+                  alt="Estructura tridimensional de álgebra discreta y grafos en azul cobalto"
+                  referrerPolicy="no-referrer"
+                  onError={() => setHeroImgFailed(true)}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-[#1E3A8A] via-[#1D4ED8] to-[#0284C7] text-white">
+                  <BookOpen className="h-10 w-10 mb-2 opacity-90" aria-hidden="true" />
+                  <span className="text-sm font-semibold">Complementos de Matemática Discreta</span>
+                  <span className="text-xs opacity-80">Facultad de Ingeniería · UNJu</span>
+                </div>
+              )}
+
+              {/* Desktop horizontal shaded bridge */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none hidden lg:block absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-[#111827] dark:via-[#111827]/85 dark:to-transparent z-10"
+              />
+              {/* Mobile vertical shaded bridge */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none lg:hidden absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white via-white/80 to-transparent dark:from-[#111827] dark:via-[#111827]/85 dark:to-transparent z-10"
+              />
+              {/* Bottom gradient scrim for caption legibility */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/75 via-slate-950/30 to-transparent z-10"
+              />
+
+              {/* Institutional Tag with small UNJu logo */}
+              <div className="absolute top-4 right-4 z-20 inline-flex items-center gap-2.5 rounded-xl border border-white/80 dark:border-slate-700/80 bg-white/95 dark:bg-[#0B1120]/95 backdrop-blur-md px-3 py-2 shadow-lg">
+                <div className="h-9 w-9 shrink-0 rounded-lg bg-white p-1 border border-slate-200/80 flex items-center justify-center">
                   <img
                     src={PORTFOLIO_META.facultyLogo}
-                    alt="Logo oficial de la Facultad de Ingeniería — Universidad Nacional de Jujuy"
+                    alt="Escudo Facultad de Ingeniería — UNJu"
                     referrerPolicy="no-referrer"
-                    onError={() => setHeroImgFailed(true)}
-                    className="max-h-[280px] w-auto object-contain"
+                    className="h-full w-full object-contain"
                   />
-                ) : (
-                  <div className="h-full w-full flex flex-col items-center justify-center p-6 text-center bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-xl">
-                    <BookOpen className="h-10 w-10 text-[#1D4ED8] dark:text-sky-400 mb-2" aria-hidden="true" />
-                    <span className="text-sm font-semibold text-[#0F172A] dark:text-white">
-                      Facultad de Ingeniería
-                    </span>
-                    <span className="text-xs">Universidad Nacional de Jujuy</span>
+                </div>
+                <div className="leading-tight pr-1">
+                  <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
+                    UNJu · FI
                   </div>
-                )}
+                  <div className="text-xs font-semibold text-[#0F172A] dark:text-white whitespace-nowrap">
+                    Facultad de Ingeniería
+                  </div>
+                </div>
               </div>
-              <p className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-3 text-center text-xs text-slate-500 dark:text-slate-400">
-                Facultad de Ingeniería · Universidad Nacional de Jujuy (UNJu)
+
+              {/* Subtle bottom visual caption */}
+              <p className="absolute bottom-4 right-5 left-5 lg:left-16 z-20 text-right text-xs font-medium text-white/90 drop-shadow-xs">
+                Álgebra discreta · Retículos, grafos y estructuras modulares
               </p>
             </div>
           </div>

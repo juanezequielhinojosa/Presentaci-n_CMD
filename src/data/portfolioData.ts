@@ -1,4 +1,4 @@
-import heroMathImage from '../assets/images/hero_math_architecture_1795403883790.jpg';
+import heroMathImage from '../assets/images/hero_discrete_algebra_1795419221836.jpg';
 import reflectionStudyImage from '../assets/images/editorial_male_student_desk_1795414810585.jpg';
 
 export interface TeamMember {
