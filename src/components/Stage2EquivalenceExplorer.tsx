@@ -12,11 +12,11 @@ interface StudentSample {
 
 const INITIAL_STUDENTS: StudentSample[] = [
   { id: 'Est. 01', localidad: 'San Salvador de Jujuy', cargaLaboral: 'Part-time', modality: 'Local' },
-  { id: 'Est. 02', localidad: 'Palpalá', cargaLaboral: 'Sin carga fija', modality: 'Local' },
-  { id: 'Est. 03', localidad: 'Perico', cargaLaboral: 'Jornada completa', modality: 'Híbrido' },
-  { id: 'Est. 04', localidad: 'San Pedro', cargaLaboral: 'Turnos rotativos', modality: 'Híbrido' },
-  { id: 'Est. 05', localidad: 'Humahuaca', cargaLaboral: 'Jornada completa', modality: 'Remoto' },
-  { id: 'Est. 06', localidad: 'Libertador Gral. San Martín', cargaLaboral: 'Jornada completa', modality: 'Remoto' },
+  { id: 'Est. 02', localidad: 'Perico', cargaLaboral: 'Jornada completa', modality: 'Híbrido' },
+  { id: 'Est. 03', localidad: 'Palpalá', cargaLaboral: 'Sin carga fija', modality: 'Local' },
+  { id: 'Est. 04', localidad: 'Tilcara', cargaLaboral: 'Jornada completa', modality: 'Remoto' },
+  { id: 'Est. 05', localidad: 'San Pedro', cargaLaboral: 'Turnos rotativos', modality: 'Híbrido' },
+  { id: 'Est. 06', localidad: 'Humahuaca', cargaLaboral: 'Jornada completa', modality: 'Remoto' },
 ];
 
 const LOCALITIES = [
