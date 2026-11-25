@@ -20,6 +20,7 @@ import {
   REFLECTION_SECTIONS,
   STAGE_1_POINTS,
   STAGE_2_DISCARDED,
+  STAGE_2_THEOREM,
   STAGE_3_PROPOSALS,
   TEAM_MEMBERS,
 } from './data/portfolioData';
@@ -252,14 +253,14 @@ export default function App() {
                     <Presentation className="h-4 w-4" aria-hidden="true" />
                     Iniciar Exposición Oral
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => window.print()}
+                  <a
+                    href={PORTFOLIO_META.portfolioPdf}
+                    download="Portafolio_Integrador_Grupo_36_UNJu.pdf"
                     className="inline-flex items-center gap-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-[#1E293B]/90 backdrop-blur-xs px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer whitespace-nowrap"
                   >
                     <Printer className="h-4 w-4" aria-hidden="true" />
                     Imprimir / PDF
-                  </button>
+                  </a>
                 </div>
               </div>
 
@@ -477,6 +478,26 @@ export default function App() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              <div className="rounded-xl border border-[#1D4ED8]/30 dark:border-sky-500/35 border-l-4 border-l-[#1D4ED8] dark:border-l-sky-400 bg-blue-50/40 dark:bg-[#0D162B] p-5 space-y-2 transition-colors">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
+                    {STAGE_2_THEOREM.eyebrow}
+                  </span>
+                  <span className="font-mono text-xs text-slate-500 dark:text-slate-400">
+                    Relación de Equivalencia ⇄ Partición
+                  </span>
+                </div>
+                <h4 className="text-base sm:text-lg font-bold text-[#0F172A] dark:text-white">
+                  {STAGE_2_THEOREM.title}
+                </h4>
+                <p className="text-sm leading-relaxed text-slate-800 dark:text-slate-200 font-medium">
+                  {STAGE_2_THEOREM.statement}
+                </p>
+                <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400 pt-1 border-t border-blue-200/60 dark:border-slate-800">
+                  {STAGE_2_THEOREM.application}
+                </p>
               </div>
 
               <Stage2EquivalenceExplorer />

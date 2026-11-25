@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, Plus, X } from 'lucide-react';
+import { Check, Plus } from 'lucide-react';
 
 type Modality = 'Todos' | 'Local' | 'Híbrido' | 'Remoto';
 
@@ -202,8 +202,8 @@ export default function Stage2EquivalenceExplorer() {
           </div>
         </div>
 
-        {/* Right: Axioms & Discarded Models */}
-        <div className="lg:col-span-5 p-5 flex flex-col justify-between gap-4 bg-[#F8FAFC] dark:bg-[#0D1322]">
+        {/* Right: Axioms */}
+        <div className="lg:col-span-5 p-5 flex flex-col gap-4 bg-[#F8FAFC] dark:bg-[#0D1322]">
           <div className="space-y-3">
             <div className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Demostración de Propiedades
@@ -231,20 +231,6 @@ export default function Stage2EquivalenceExplorer() {
                 <span>{axiomObj.title}</span>
               </div>
               <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">{axiomObj.explanation}</p>
-            </div>
-          </div>
-
-          <div className="space-y-2 border-t border-slate-200 dark:border-slate-800 pt-3">
-            <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Por qué se descartaron otros modelos
-            </div>
-            <div className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
-              <X className="h-3.5 w-3.5 shrink-0 text-red-600 dark:text-red-400 mt-0.5" aria-hidden="true" />
-              <span><strong>Orden parcial (Hasse):</strong> si Est. 01 R Est. 02 y Est. 02 R Est. 01 pero Est. 01 ≠ Est. 02, se viola la antisimetría.</span>
-            </div>
-            <div className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
-              <X className="h-3.5 w-3.5 shrink-0 text-red-600 dark:text-red-400 mt-0.5" aria-hidden="true" />
-              <span><strong>Retículos:</strong> no existe cota superior ni inferior única entre estudiantes reales.</span>
             </div>
           </div>
         </div>

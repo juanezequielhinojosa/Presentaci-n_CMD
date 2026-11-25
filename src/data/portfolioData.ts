@@ -41,6 +41,7 @@ export const PORTFOLIO_META = {
   heroImage: heroMathImage,
   reflectionImage: reflectionStudyImage,
   facultyLogo: './assets/aistudio/image_b937669a.png',
+  portfolioPdf: './assets/aistudio/Portafolio_Integrador_98090ea9.pdf',
 };
 
 export const TEAM_MEMBERS: TeamMember[] = [
@@ -150,6 +151,15 @@ export const STAGE_2_DISCARDED = [
       'Descartados porque dentro de la diversidad territorial y laboral de los cursantes no existe un "estudiante supremo" ni un "estudiante ínfimo" universal.',
   },
 ];
+
+export const STAGE_2_THEOREM = {
+  eyebrow: 'Fundamento Teórico · Correspondencia Biunívoca',
+  title: 'Teorema Fundamental de las Relaciones de Equivalencia',
+  statement:
+    'Toda relación de equivalencia sobre un conjunto induce una partición en clases disjuntas y no vacías, y recíprocamente, toda partición define una única relación de equivalencia.',
+  application:
+    'Aplicado al cursado en la UNJu, la relación a R b ⇔ f(a) = f(b) particiona al padrón de estudiantes E en exactamente tres bloques del conjunto cociente E/R (Local, Híbrido y Remoto), garantizando cobertura total y cero solapamientos.',
+};
 
 export const STAGE_3_PROPOSALS = [
   {

@@ -24,6 +24,7 @@ import {
   SPEAKER_NOTES,
   STAGE_1_POINTS,
   STAGE_2_DISCARDED,
+  STAGE_2_THEOREM,
   STAGE_3_PROPOSALS,
   TEAM_MEMBERS,
 } from '../data/portfolioData';
@@ -382,6 +383,26 @@ export default function PresentationMode({
                     <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400">{item.reason}</p>
                   </div>
                 ))}
+              </div>
+
+              <div className="rounded-xl border border-[#1D4ED8]/30 dark:border-sky-500/35 border-l-4 border-l-[#1D4ED8] dark:border-l-sky-400 bg-blue-50/40 dark:bg-[#0D162B] p-4 sm:p-5 space-y-1.5 transition-colors">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
+                    {STAGE_2_THEOREM.eyebrow}
+                  </span>
+                  <span className="font-mono text-xs text-slate-500 dark:text-slate-400">
+                    Relación de Equivalencia ⇄ Partición
+                  </span>
+                </div>
+                <h3 className="text-base font-bold text-[#0F172A] dark:text-white">
+                  {STAGE_2_THEOREM.title}
+                </h3>
+                <p className="text-xs sm:text-sm leading-relaxed text-slate-800 dark:text-slate-200 font-medium">
+                  {STAGE_2_THEOREM.statement}
+                </p>
+                <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400 pt-1 border-t border-blue-200/60 dark:border-slate-800">
+                  {STAGE_2_THEOREM.application}
+                </p>
               </div>
 
               <Stage2EquivalenceExplorer />
