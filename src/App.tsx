@@ -529,6 +529,28 @@ export default function App() {
                 ))}
               </div>
 
+              <figure className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-4 sm:p-5 space-y-3 transition-colors">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#1D4ED8] dark:text-sky-400">
+                    Propiedades de la Estructura · Monoide Conmutativo e Idempotente
+                  </span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">
+                    Conjunto ℕ = {'{1, …, 10}'} · Operación a * b = máx(a, b)
+                  </span>
+                </div>
+                <div className="overflow-hidden rounded-lg border border-slate-200/80 dark:border-slate-800 bg-[#0B1120]">
+                  <img
+                    src="./assets/aistudio/etapa3_f5b63310.jpeg"
+                    alt="Esquema de las cinco propiedades del monoide conmutativo e idempotente: cerrada, conmutativa, asociativa, neutro e igual a 1 e idempotente"
+                    loading="lazy"
+                    className="w-full h-auto max-h-[520px] object-contain mx-auto"
+                  />
+                </div>
+                <figcaption className="text-xs text-slate-500 dark:text-slate-400">
+                  Fig. 2 — Síntesis de las cinco propiedades algebraicas verificadas sobre la operación máx(a, b) antes de su inspección en la Tabla de Cayley.
+                </figcaption>
+              </figure>
+
               <Stage3MonoidExplorer />
             </article>
           )}
